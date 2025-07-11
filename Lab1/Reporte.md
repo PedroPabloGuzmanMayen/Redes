@@ -13,7 +13,8 @@
 
 ## Ejercicio 1
 
-
+- **Forma de traducir el morse:**: usando un software en línea que genera el audio y poniéndolo en la llamada al receptor
+- **Forma de traducir Blaudot:** usado físicamente un sonido más grave y uno más agudo (somatar el escritorio para los + y golpear una estructura metálica para los 0)
 ### Mensaje 1
 
 - Emisor: Pedro Guzmán  
@@ -113,13 +114,13 @@
 
 ### ¿Cuál esquema fue más fácil? ¿Más difícil?
 
-- El esquema más fácil de escribir fue el código morse pues tiene una escritura sencilla y mensajes largos pueden escribirse de una forma más reducida. El código de Baudot no se utilizó ya que tiene una escritura compleja.
-- En cuanto a descifrar el mensaje, muchas veces el mensaje solo pudo ser descifrado debido a que ambos participantes del grupo se conocen y logran entender con pocas palabras a lo que se refiere el otro, sin embargo fue difícil escuchar todo el mensaje y lograr descifrarlo todo a la primera ya que, incluso con la velocidad más baja para reproducir el mensaje, a veces no se logran identificar de forma correcta los sonidos largos y los sonidos cortos y tampoco se logra identificar bien en donde termina y empieza una palabra en específico. Posiblmente Baudot sea más sencillo de escuchar aunque escribir el mensaje tome más tiempo.
+- El esquema más fácil de escribir fue el código morse pues tiene una escritura sencilla y mensajes largos pueden escribirse de una forma más reducida. El código de Baudot tenía una escritura y forma de representación más compleja. 
+- En cuanto a descifrar el mensaje, fue más sencillo de entender Baudot debido a que se hicimos un protocolo en el cuál había dos sonidos 
 
 ### ¿Con cuál ocurren menos errores?
 
-- Solo se uso código Morse, no se cometieron tantos errores debido a que muchos de los mensajes son bromas internas entre los integrantes.
-
+- Solo se uso código Morse, no se cometieron tantos errores debido a que la mayoría del tiempo el software generaa los audios de forma limpia aunque a ve
+ces era difícil identifcar las letras de forma correcta a la primera. El de Blaudot fue más fácil de identificar debido a que se utilizaron 2 sonidos distintos bastante identificables para representarlo. 
 
 ## Ejercicio 2
 
