@@ -201,7 +201,8 @@ Para reproducir los audios en la página, se recomienda copiar el mensaje origin
 
 ## Ejercicio 3
 
-- *Conmutador*
+- *Conmutador: * Pedro Guzmán
+- *Clientes :* Gustavo Cruz, Gabriela Mazariegos, Santiago Pereira
 
 ### ¿Qué posibilidades incluye la introducción de un conmutador en el sistema?
 
@@ -218,11 +219,50 @@ Para reproducir los audios en la página, se recomienda copiar el mensaje origin
 
 ### ¿Qué esquema tuvo menos errores (incluir datos que lo evidencien)?
 
-- Solamente se uso el morse, hubieron bastantes errores que se detallan a continuación:
+- Solamente se uso el morse, hubieron algunos errores que se detallan a continuación:
 
 #### Mensaje 1
 
-- Original
+- Original: Hola como estás
+- Mensaje identificado por el conmutador: Hola
+- Solamente se logró identifcar una cadena debido a que el mensaje en código morse fue representado usando sonidos cotidianos que no eran fácilmente identificables
+
+#### Mensaje 2
+
+- Original: Es para Gustavo
+- Identificado: Es para Gustavo
+- Se identificó de forma correcta debido a que el código fue generado con un software que generaba el sonido del mensaje de forma más clara y entendible.
+
+#### Mensaje 3
+
+- Original: Hola mundo
+- Identificado: Hola mundo
+- Se identificó de forma correcta debido a que fue enviado con un software que generaba un sonido claro e identificable
+
+El código morse demostró ser un buen esquema para enviar mensajes pues la mayoría de ellos fueron identificables. 
+
+### ¿Qué dificultades involucra el enviar un mensaje de forma “empaquetada”?
+
+Que a veces se puede perder información debido a errores de los dispositivos de transmición, por ejemplo cuando alguien grababa su mensaje usado objetos cotidianos, a veces el micrófono del dispositivo no capturaba de forma correcta los sonidos.
+
+
+### Qué ventajas/desventajas se tienen al momento de agregar más conmutadores al sistema?
+
+- Ventajas: más clientes pueden enviar más mensajes al mismo tiempo
+- Desventajas: puede ser más costoso
+
+### ¿Qué posibilidades incluye la introducción de un conmutador en el sistema?
+
+- Da la posibilidad de correjir errores en la transmisión del mensaje y mejorar la calidad de este.
+
+
+### Protocolo utilizado
+
+- El mensaje debía escribirse o representarse usando código morse
+- Si el cliente 1 quería enviarle un mensaje al cliente 2, debía enviar su audio el conmutador y luego un mensaje en el que expresara a que cliente iba dirigido el mensaje
+- El conmutador enviaba un 0 a los clientes si estaba libre, cuando se ocupaba enviaba un 1 y el cliente debía esperar a que el 0 se enviara nuevamente.
+
+  
 
 
 
