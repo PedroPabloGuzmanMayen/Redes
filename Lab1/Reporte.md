@@ -14,6 +14,105 @@
 ## Ejercicio 1
 
 
+### Mensaje 1
+
+- Emisor: Pedro Guzmán  
+- Mensaje original: HOLA MUNDO  
+- Baudot:  
+  H → 10100  
+  O → 01100  
+  L → 11100  
+  A → 00011  
+  (espacio)  
+  M → 10011  
+  U → 00100  
+  N → 10111  
+  D → 00010  
+  O → 01100  
+- Secuencia completa:  
+  `10100 01100 11100 00011`  
+  `10011 00100 10111 00010 01100`  
+- Mensaje decodificado: HOLA MUNRO  
+- Errores: Letra "D" interpretada como "R" por cambio de un bit.  
+
+---
+
+### Mensaje 2
+
+- Emisor: Gustavo Cruz  
+- Mensaje original: PRUEBA123  
+- Modo: Se requiere cambiar a FIGURAS para los números  
+- Baudot:  
+  Letras:  
+  P → 01101  
+  R → 01010  
+  U → 00100  
+  E → 00001  
+  B → 11000  
+  A → 00011  
+  FIGS → 11011  
+  1 → 10111  
+  2 → 10011  
+  3 → 00010  
+- Secuencia completa:  
+  `01101 01010 00100 00001 11000 00011`  
+  `11011 10111 10011 00010`  
+- Mensaje decodificado: PRUEBA123  
+- Errores: No hubo errores  
+
+---
+
+### Mensaje 3
+
+- Emisor: Gustavo Cruz  
+- Mensaje original: CODIGO ROTO  
+- Baudot :  
+  C → 01110  
+  O → 01100  
+  D → 00010  
+  I → 01011  
+  G → 11010  
+  O → 01100  
+  (espacio)  
+  R → 01010  
+  O → 01100  
+  T → 10000  
+  O → 01100  
+- Secuencia completa:  
+  `01110 01100 00010 01011 11010 01100`  
+  `01010 01100 10000 01100`  
+- Mensaje decodificado: CODIGO ROTO  
+- Errores: No hubo errores    
+
+
+### Mensaje 4
+
+- Emisor: Gustavo Cruz  
+- Mensaje original: Hola equipo  
+- Mensaje en morse: .... --- .-.. .- / . --.- ..- .. .--. ---  
+- Mensaje decodificado: Hola equlpo  
+- Errores: Letra "i" fue interpretada como "l", por lo que "equipo" se leyó como "equlpo".  
+
+
+
+### Mensaje 5
+
+- Emisor: Pedro Guzmán  
+- Mensaje original: Lunes sin sol  
+- Mensaje en morse: .-.. ..- -. . ... / ... .. -. / ... --- .-..  
+- Mensaje decodificado: Lunes sin sol  
+- Errores: No hubo errores  
+
+
+
+### Mensaje 6
+
+- Emisor: Gustavo Cruz  
+- Mensaje original: Código roto  
+- Mensaje en morse: -.-. --- -.. .. --. --- / .-. --- - ---  
+- Mensaje decodificado: Código roto  
+- Errores: La letra “i” fue omitida; la palabra "Código" se interpretó incorrectamente.  
+
 ### ¿Cuál esquema fue más fácil? ¿Más difícil?
 
 - El esquema más fácil de escribir fue el código morse pues tiene una escritura sencilla y mensajes largos pueden escribirse de una forma más reducida. El código de Baudot no se utilizó ya que tiene una escritura compleja.
