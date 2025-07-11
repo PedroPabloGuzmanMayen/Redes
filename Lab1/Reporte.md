@@ -24,6 +24,7 @@
 - Mensaje en morse: - . .-. -- .. -. . -- --- ... / .-.. .- / - .- .-. . .-
 - Medio de transmición: generador de audio online. [Link aquí](https://morsecode.world/international/translator.html)
 - Mensaje decodificado: Terminaremos
-- Errores: La cadena original tenía 17 caracteres, se identificaron solamente 12 y solo 6 deforma correcta.
+- Errores: La cadena original tenía 17 caracteres, se identificaron solamente 12 y solo 6 de forma correcta.
+
 
 
