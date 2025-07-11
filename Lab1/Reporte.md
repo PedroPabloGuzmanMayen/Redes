@@ -201,6 +201,29 @@ Para reproducir los audios en la página, se recomienda copiar el mensaje origin
 
 ## Ejercicio 3
 
+- *Conmutador*
+
+### ¿Qué posibilidades incluye la introducción de un conmutador en el sistema?
+
+-  Introduce la posibilidad de tener a un ente externo que revise los mensajes de una mejor manera y sea capaz de correjir errores en estos.
+-  
+### ¿Qué ventajas/desventajas se tienen al momento de agregar más conmutadores al sistema?
+
+- Ventajas: la posibilidad de correjir errores o evitar perdida de información
+- Desventajas: posiblemente mayores costos de implemetnación
+
+### Qué esquema (código) fue más fácil de transmitir y por qué?¿Qué esquema (código) fue más difícil de transmitir y por qué?
+
+- Solamente se utilizó código morse debido a que los integrantes coincidieron en que este código tenía una escritura/representación más sencilla
+
+### ¿Qué esquema tuvo menos errores (incluir datos que lo evidencien)?
+
+- Solamente se uso el morse, hubieron bastantes errores que se detallan a continuación:
+
+#### Mensaje 1
+
+- Original
+
 
 
 
