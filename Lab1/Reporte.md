@@ -13,6 +13,12 @@
 
 ## Ejercicio 1
 
+---
+
+Para reproducir los audios en la página, se recomienda copiar el mensaje original y reproducirlo a una velocidad de "5".
+
+---
+
 ### Mensaje 1
 
 - Emisor: Pedro Guzmán
