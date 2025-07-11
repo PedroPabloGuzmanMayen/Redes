@@ -40,8 +40,7 @@
 ### Mensaje 2
 
 - Emisor: Gustavo Cruz  
-- Mensaje original: PRUEBA123  
-- Modo: Se requiere cambiar a FIGURAS para los números  
+- Mensaje original: PRUEBA123    
 - Baudot:  
   Letras:  
   P → 01101  
@@ -102,7 +101,6 @@
 - Mensaje en morse: .-.. ..- -. . ... / ... .. -. / ... --- .-..  
 - Mensaje decodificado: Lunes sin sol  
 - Errores: No hubo errores  
-
 
 
 ### Mensaje 6
