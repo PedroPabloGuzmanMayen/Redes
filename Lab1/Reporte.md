@@ -5,6 +5,12 @@
 - Gustavo Cruz 22779
 - Pedro Guzmán 22111
 
+## Integrantes adicionales 
+
+- Gabriela Mazariegos 22513
+- Santiago Pereira 22318
+
+
 ## Ejercicio 1
 
 ### Mensaje 1
