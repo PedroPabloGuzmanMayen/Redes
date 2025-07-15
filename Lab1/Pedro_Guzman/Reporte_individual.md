@@ -69,8 +69,7 @@ El comando ipconfig muestra como la computadora está conectada a la red y cuál
 
 ![Ejercicio11](Ejercicio11_2.png)
 
-
-
+![Ejercicio11](Ejercicio11_3.png)
 
 ## Parte 3
 
@@ -100,7 +99,22 @@ Las solicitudes al sitio indicado son las primeras en la lista
 
 ### En el caso que haya un problema de rendimiento mientras se descarga la página, ¿En que elementos de la red convendría “escuchar” los paquetes? ¿Es conveniente instalar Wireshark en el servidor? Justifique.
 
-- si sería conveniente también escuchar las peticiones en el servidor 
+- Si sería conveniente también escuchar las peticiones en el servidor pues en caso de haber problemas con el navegador podríamos utilizar wireshark para tener la información de los paquetes intercambiados también en el servidor. Sin embargo esto también nos quitaría capacidad de procesamiento en el servidor pues estaríamos gastando recursos en ejecutar wireshark. 
+
+## Discusión
+
+- Fue una actividad bastante interesante pues aprendí a como usar una nueva herramienta para capturar tráfico de red, con esto pude notar detalles interesantes sobre la red de mi hogar pues parece haber dispositivos conectados que no recuerdo tener. 
+
+- La actividad grupal fuebastante enriquecedora pues me dio la posibilidad de experimentar de una forma más cercana la forma de implementar un protocolo y ponerlo en práctica. 
+
+## Comentario
+
+- Fue una actividad bastante entretenida de hacer pues fue bastante interactiva y enriquecedora. 
+
+## Conclusiones
+
+- Wireshark es una herramienta bastante útil para capturar información de paquetes transmitidos a través de la red
+- Las actividades grupales son enriquecedoras pues ayudan a tener una mejor idea sobre los conceptos aprendidos en clase. 
 
 ### Referencias
 
