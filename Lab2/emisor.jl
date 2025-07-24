@@ -1,62 +1,64 @@
 function calcular_r(m::Int)
-	r=0
-	while m + r + 1 > 2^r
-		r+=1
-	end
-	return r
+    r = 0
+    while m + r + 1 > 2^r
+        r += 1
+    end
+    return r
 end
 
-function insertar_bits_paridad(bits::Vector{Char}, r::Int)
-	for i in 1:r
-		insert!(bits, 2^(i-1), '0')
-	end
-	return bits
-end
-
-function calcular_bits_paridad(bits::Vector{Char}, r::Int)
-	n = length(bits)
-	for i in 1:r
-		pos = 2^(i-1)
-		paridad=0
-		for j in 1:n
-			if j & pos != 0
-				bit = parse(Int, bits[j])
-				paridad = xor(paridad, bit)
-			end
-		end
-		bits[pos] = Char(paridad + 0x30)
-	end
-	return bits
-end
-
-# Main del emisor
 function hamming_emisor(mensaje::String)::String
     println("Mensaje original: $mensaje")
-
     m = length(mensaje)
     r = calcular_r(m)
-    println("Número de bits de paridad necesarios: $r")
-
-    bits = collect(mensaje)
-    bits = insertar_bits_paridad(bits, r)
+    println("Bits de paridad necesarios: $r")
+    
+    n = m + r
+    bits = Vector{Char}(undef, n)
+    fill!(bits, '0')
+    
+    mensaje_idx = 1
+    for i in 1:n
+        if !es_potencia_de_2(i)
+            bits[i] = mensaje[mensaje_idx]
+            mensaje_idx += 1
+        end
+    end
+    
     println("Bits con espacios de paridad: ", join(bits))
-
-    bits = calcular_bits_paridad(bits, r)
+    
+    for i in 1:r
+        pos_paridad = 2^(i-1)
+        paridad = 0
+        
+        for j in 1:n
+            if (j & pos_paridad) != 0
+                bit_val = parse(Int, bits[j])
+                paridad = xor(paridad, bit_val)
+            end
+        end
+        
+        bits[pos_paridad] = Char(paridad + 0x30)
+    end
+    
     mensaje_codificado = join(bits)
-    println("Mensaje codificado con Hamming: $mensaje_codificado")
+    println("Mensaje codificado: $mensaje_codificado")
     return mensaje_codificado
 end
 
-# main para pruebas para la parte 1 del lab
+function es_potencia_de_2(n::Int)::Bool
+    return n > 0 && (n & (n - 1)) == 0
+end
+
 function main()
-	println("PRUEBA 1") 
-    hamming_emisor("1010")
-
-	println("\nPRUEBA 2")
-    hamming_emisor("110011")
-
-    println("\nPRUEBA 3 ")
-    hamming_emisor("1001101")
+    println("prueba 1:")
+    cod1 = hamming_emisor("1010")
+    
+    println("\nprueba 2:")
+    cod2 = hamming_emisor("110011")
+    
+    println("\nprueba 3:")
+    cod3 = hamming_emisor("1001101")
+    
 end
 
 main()
