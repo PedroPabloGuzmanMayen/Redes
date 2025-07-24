@@ -42,7 +42,7 @@ python(indicar version) receptor.py
 ---
 
 ### Pruebas realizadas 
-#### (emisor)
+#### Emisor
 
 ### PRUEBA 1
 
@@ -65,43 +65,27 @@ Número de bits de paridad necesarios: `4`
 Bits con espacios de paridad: `00100010101`  
 Mensaje codificado con Hamming: `01110010101`
 
-#### (receptor)
+#### Receptor
+
+### Prueba 1 (0 errores)
+Mensaje: 10101010111
+Resultado: 10101010111
+Info: No hay errores
+
+### Prueba 2 (1 error)
+Mensaje: 1110001
+Original: 1100001
+Resultado: 1100001
+Info: Se corrigió un error en la posición 5
+
+### Prueba 3 (2 o más)
+
+Mensaje: 110110011001
+Resultado: 110110111001
+Info: Se corrigió un error en la posición 6
 
 ---
 
-## Pruebas de detección/corrección
-
-### Sin errores
-
-Para esta prueba, se toma el mensaje codificado generado por el emisor y se pasa tal cual al receptor. La respuesta esperada es el mensaje original sin cambios.
-
-Resultados esperados:
-- PRUEBA 1:  
-  Entrada al receptor: `1011010`  
-  Salida esperada: ``
-
-- PRUEBA 2:  
-  Entrada al receptor: `1011100011`  
-  Salida esperada: ``
-
-- PRUEBA 3:  
-  Entrada al receptor: `01110010101`  
-  Salida esperada: ``
-
----
-
-### Con un error
-
-Para esta prueba, se modifica un bit del mensaje codificado antes de pasarlo al receptor. El receptor debe detectar y corregir el error, e indicar la posición modificada.
-
-
----
-
-### Con dos errores
-
-En esta prueba se alteran dos bits. El receptor debe detectar que el mensaje contiene errores.
-
----
 
 ## ¿Es posible manipular los bits de tal forma que el algoritmo no detecte el error?
 
