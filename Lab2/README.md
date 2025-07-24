@@ -111,4 +111,83 @@ Desventajas:
 
 Para la correción de errores se utilizó el algoritmo CRC con el polinomio $$x^3+1$$
 
+### Implementación
+
+Se desarrolló la parte del emisor en javascript, este algoritmo hace lo siguiente:
+
+- Crea una copia del mensaje original y agrega 3 0's 
+- Recorre el mensaje original y aplica la operación XOR entre la cadena 1001 y los primeros 4 bits de la cadena sobre la que estamos operando
+- Si el primero dígito es 0, lo borra y guarda e resultado
+- Si luego de hacer XOR, la longitud del resultdo es mayor o igual a la del polinomio, sigue operando hasta que sea menor
+
+La parte del receptor fue hecha en Lua y se hizo lo siguiente: 
+- Se creo una función que hace la operación XOR entre 2 cadenas de igual longitud
+- Al igual que el emisor, va haciendo la operación XOR sobre los primeros 4 bits del mensaje y va almacenando el resultado
+- Si el residuo es 0, no se detectó un error
+
+---
+
+### Pruebas 
+
+#### Emisor
+
+### Prueba 1
+
+ Mensaje original: 1010
+ Mensaje codificado: 1010011
+
+### Prueba 2
+
+ Mensaje original: 1101
+ Mensaje codificado: 1101100
+
+### Prueba 3 
+ Mensaje original: 0001
+ Mensaje codificado: 0001001
+
+
+#### Receptor
+
+### Prueba 1 (no errores)
+Mensaje original: 1010011
+Mensaje usado: 1010011
+Residuo final:  000
+Mensaje válido: no hay errores
+
+### Prueba (1 error)
+Mensaje original: 1101100
+Mensaje usado: 1101001
+Residuo final:  101
+Errores detectados en el mensaje
+
+### Prueba 3 ( 2 o más errores)
+Original: 0001001
+Usado: 1011101
+Residuo final:  111
+Errores detectados en el mensaje
+
+---
+
+### ¿Hay una forma de manipular la información para que no detecte errores?
+
+- Si se cambian los bits para que la división XOR de un residuo 0 es posible que haya errores que no se detecten. En nuestro programa se hizo con la siguiente cadena: 1001000 cuya forma original era: 1101100. Se alteraron 2 bits y eso provocó que el receptor no fuera capaz de identificar errores
+
+---
+
+## Ventajas y desventajas de CRC
+
+Ventajas:
+- Capaz de detectar varios error.
+- Implementación más sencilla que el algoritmo de Hamming.
+
+Desventajas:
+- No puede corregir errores.
+
+---
+
 ## Conclusiones
+
+- Cada algoritmo tiene sus ventajas y desventajas, si queremos usar "el mejor posible" debemos tener en cuenta que requerimientos queremos. 
+- Es posible manipular la información de tal manera para que no se puedan detctar errores, eso refuerza lo visto en clase de que la red no es un medio confiable. 
+
+
