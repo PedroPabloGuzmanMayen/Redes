@@ -25,7 +25,7 @@ const codificarMensaje = (mensaje) => {
 
 }
 
-console.log(codificarMensaje("0110"))
+console.log(codificarMensaje("1001"))
 
 
 
