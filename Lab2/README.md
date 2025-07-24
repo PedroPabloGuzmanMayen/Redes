@@ -107,4 +107,8 @@ Desventajas:
 
 ---
 
+## Detección de errores
+
+Para la correción de errores se utilizó el algoritmo CRC con el polinomio $$x^3+1$$
+
 ## Conclusiones
