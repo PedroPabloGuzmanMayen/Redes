@@ -4,8 +4,9 @@ Pedro Guzmán - 22111
 Gustavo Cruz - 22779
 
 ---
+## Correción de errores
 
-## Código de Hamming – Emisor
+Para la correción de errores se utilizó el algoritmo de Hamming
 
 ### Implementación
 
@@ -21,6 +22,22 @@ La implementación:
 - Calcula el número de bits de paridad necesarios.
 - Inserta bits de paridad en posiciones 2^i.
 - Calcula los valores de paridad aplicando xor entre los bits correspondientes.
+
+La parte del receptor se hizo en python. Esta función hace lo siguiente: 
+
+- Recibe el mensaje original y el número de bits redundantes que hay en el mensaje
+- Recorre las posiciones de redundancia y verifica que la operación XOR entre todas las posiciones que influyen en el bit de redundancia sea igual a 0
+- Si se cumple indica quehay error y lo arregla
+
+Para ejecutar: 
+
+```bash
+cd Lab2
+cd Hamming
+julia emisor.jl
+python(indicar version) receptor.py
+```
+
 
 ---
 

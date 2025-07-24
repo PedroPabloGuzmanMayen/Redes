@@ -24,9 +24,20 @@ def detectar_y_corregir(mensaje: str, r: int):
         return mensaje, "Hay 2 o más errores: no se pueden corregir"
 
 
-mensaje = "1011100011"
-r = 4  
-resultado, info = detectar_y_corregir(mensaje, r)
-print("Resultado:", resultado)
-print("Info:", info)
+print("\n--- ¨Pruebas ---")
+mensajes = [
+    "10101010111",  # Mensaje sin error
+    "1110001",      # Mensaje con un error
+    "110110011001"  # Mensaje sin error
+]
+
+rs = [4, 3, 4]
+
+for m, r in zip(mensajes, rs):
+    resultado, info = detectar_y_corregir(m, r)
+    print(f"Mensaje: {m}")
+    print(f"Resultado: {resultado}")
+    print(f"Info: {info}\n")
+
+
 
