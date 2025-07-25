@@ -66,6 +66,22 @@ function codificar_mensaje(mensaje_texto::String)::String
     return binario
 end
 
+function calcular_integridad(binario::String)::String
+    println("[Enlace] Aplicando Hamming...")
+    return hamming_emisor(binario)
+end
+
+# Por el momento solo cambia un bit, pero se puede cambiar al aumentar el valor de count en 'trama_ruidosa'
+function aplicar_ruido(trama::String)::String
+    n = length(trama)
+    i = rand(1:n)
+    flip = trama[i] == '0' ? '1' : '0' # Verificar valor del bit en la posicion 'i'
+    trama_ruidosa = String(trama)
+    trama_ruidosa = replace(trama_ruidosa, trama[i] => flip; count=1)
+    println("[Ruido] Bit modificado en posición $i: $trama_ruidosa")
+    return trama_ruidosa
+end
+
 function main()
     println("prueba 1:")
     cod1 = hamming_emisor("1010")
