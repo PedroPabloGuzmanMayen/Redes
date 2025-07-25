@@ -49,6 +49,23 @@ function es_potencia_de_2(n::Int)::Bool
     return n > 0 && (n & (n - 1)) == 0
 end
 
+
+function solicitar_mensaje()
+	println("ingrese el mensaje a enviar: ")
+	return mensaje_texto = readline()
+end
+
+function codificar_mensaje(mensaje_texto::String)::String
+    binario = ""
+    for c in mensaje_texto
+        ascii = UInt8(c)
+        bin_c = bitstring(ascii) 
+        binario *= bin_c
+    end
+    println("ASCII binario: $binario")
+    return binario
+end
+
 function main()
     println("prueba 1:")
     cod1 = hamming_emisor("1010")
