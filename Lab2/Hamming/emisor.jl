@@ -55,21 +55,24 @@ function solicitar_mensaje()
 	return mensaje_texto = readline()
 end
 
-function codificar_mensaje(mensaje_texto::String)::String
-    binario = ""
+function codificar_mensaje(mensaje_texto::String)::Vector{String}
+    binarios = String[]
     for c in mensaje_texto
         ascii = UInt8(c)
-        bin_c = bitstring(ascii) 
-        binario *= bin_c
+        push!(binarios, bitstring(ascii))  # 8 bits por carácter
     end
-    println("ASCII binario: $binario")
-    return binario
+    println("ASCII binario por letra: ", join(binarios, " "))
+    return binarios
 end
 
-function calcular_integridad(binario::String)::String
-    println("[Enlace] Aplicando Hamming...")
-    return hamming_emisor(binario)
+function calcular_integridad(lista_binarios::Vector{String})::String
+    codificados = String[]
+    for binario in lista_binarios
+        push!(codificados, hamming_emisor(binario))
+    end
+    return join(codificados)
 end
+
 
 # Por el momento solo cambia un bit, pero se puede cambiar al aumentar el valor de count en 'trama_ruidosa'
 function aplicar_ruido(trama::String)::String
@@ -78,20 +81,25 @@ function aplicar_ruido(trama::String)::String
     flip = trama[i] == '0' ? '1' : '0' # Verificar valor del bit en la posicion 'i'
     trama_ruidosa = String(trama)
     trama_ruidosa = replace(trama_ruidosa, trama[i] => flip; count=1)
-    println("[Ruido] Bit modificado en posición $i: $trama_ruidosa")
+    #println("Bit modificado en posición $i: $trama_ruidosa")
     return trama_ruidosa
 end
 
 function main()
-    println("prueba 1:")
-    cod1 = hamming_emisor("1010")
-    
-    println("\nprueba 2:")
-    cod2 = hamming_emisor("110011")
-    
-    println("\nprueba 3:")
-    cod3 = hamming_emisor("1001101")
-    
+    mensaje_texto = solicitar_mensaje()
+    @assert isa(mensaje_texto, String) "Error: mensaje debe ser String"
+    println("[Aplicación] Mensaje original: $mensaje_texto")
+
+    lista_binarios = codificar_mensaje(mensaje_texto)
+    @assert isa(lista_binarios, Vector{String}) "Error: codificar_mensaje debe retornar Vector{String}"
+    println("[Presentación] Codificación verificada. Total letras: $(length(lista_binarios))")
+
+    trama = calcular_integridad(lista_binarios)
+    @assert isa(trama, String) "Error: calcular_integridad debe retornar String"
+    println("[Enlace] Trama con redundancia: $trama")
+
+    trama_ruidosa = aplicar_ruido(trama)
+    println("[Ruido] Trama final enviada: $trama_ruidosa")
 end
 
 main()
