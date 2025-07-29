@@ -1,3 +1,4 @@
+polinomio = "1001"
 def detectar_y_corregir(mensaje: str, r: int):
 
 
@@ -23,21 +24,30 @@ def detectar_y_corregir(mensaje: str, r: int):
     else:
         return mensaje, "Hay 2 o más errores: no se pueden corregir"
 
+def detectar_errores_CRC(mensaje: str):
+    result = mensaje
+    temp = ""
+    while ( len(result) > len(polinomio)):
+        for i in range(len(polinomio)):
+            temp += str(int(result[i]) ^ int(polinomio[i]))
 
-print("\n--- ¨Pruebas ---")
-mensajes = [
-    "10101010111",  # Mensaje sin error
-    "1110001",      # Mensaje con un error
-    "110110011001"  # Mensaje sin error
-]
+        print(temp)
 
-rs = [4, 3, 4]
+        if temp[0] == '0':
+            result = temp[1:] + mensaje[-(len(result) - len(polinomio)):]
+        else: 
+            result = temp + mensaje[-(len(result) - len(polinomio)):]
+        temp = ""
 
-for m, r in zip(mensajes, rs):
-    resultado, info = detectar_y_corregir(m, r)
-    print(f"Mensaje: {m}")
-    print(f"Resultado: {resultado}")
-    print(f"Info: {info}\n")
+    if "1" in result:
+        return True
+    else:
+        return False
+    
+
+
+print(detectar_errores_CRC("0110110"))
+
 
 
 
