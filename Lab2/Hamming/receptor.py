@@ -43,10 +43,7 @@ def detectar_errores_CRC(mensaje: str):
         print("Result: ", result)
         temp = ""
 
-    if "1" in result:
-        return True
-    else:
-        return False
+    return "1" in result
     
 """
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
