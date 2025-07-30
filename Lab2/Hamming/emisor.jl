@@ -1,11 +1,39 @@
 using Random
+using Sockets
 
+
+polinomio = "1001"
 function calcular_r(m::Int)
     r = 0
     while m + r + 1 > 2^r
         r += 1
     end
     return r
+end
+
+
+function crc_emisor(mensaje::String)::String
+    resultado = mensaje * "000"
+    temp = ""
+    while(length(resultado) >= length(polinomio))
+        for i in 1:4
+            temp = temp * string(xor(parse(Int, resultado[i]), parse(Int, polinomio[i])))
+        end
+        println("Temp: " * temp)
+        println("Temp 0: " * temp[1])
+        println(temp[1] == '0')
+        println("Mensaje: " * mensaje)
+        if temp[1] == '0'
+            resultado = temp[2:end] * resultado[end - (length(resultado) - length(polinomio)) + 1:end]
+        else 
+            resultado = temp * resultado[end - (length(resultado) - length(polinomio)) + 1:end]
+        end
+        temp = ""
+        println("Rsultado: " * resultado)
+    end
+
+    return mensaje * resultado
+
 end
 
 function hamming_emisor(mensaje::String)::String
@@ -100,21 +128,9 @@ function aplicar_ruido(trama_codificada::Vector{String}, tasa::Int)::Vector{Stri
 end
 
 function main()
-    mensaje_texto, ruido = solicitar_mensaje()
-    @assert isa(mensaje_texto, String) "Error: mensaje debe ser String"
-    println("[Aplicación] Mensaje original: $mensaje_texto")
+    mensaje = readline()
 
-    lista_binarios = codificar_mensaje(mensaje_texto)
-    @assert isa(lista_binarios, Vector{String}) "Error: codificar_mensaje debe retornar Vector{String}"
-    println("[Presentación] Codificación verificada. Total letras: $(length(lista_binarios))")
-
-    codificados = calcular_integridad(lista_binarios)
-    trama = join(codificados, " ")
-    println("[Enlace] Trama con redundancia: $trama")
-
-    trama_con_ruido = aplicar_ruido(copy(codificados), ruido)
-    trama_final = join(trama_con_ruido, " ")
-    println("[Ruido] Trama final enviada: $trama_final")
+    println(crc_emisor(mensaje))
 end
 
 main()
