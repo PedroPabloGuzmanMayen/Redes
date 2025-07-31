@@ -70,10 +70,17 @@ function hamming_emisor(mensaje::String)::String
         bits[pos_paridad] = Char(paridad + 0x30)
     end
 
-    mensaje_codificado = join(bits)
-    println("Mensaje codificado: $mensaje_codificado")
+    paridad_general = 0
+    for b in bits
+        paridad_general ⊻= parse(Int, b)
+    end
+    bit_extra = Char(paridad_general + 0x30)
+
+    mensaje_codificado = join(bits) * bit_extra
+    println("Mensaje codificado con bit extra: $mensaje_codificado")
     return mensaje_codificado
 end
+
 
 function es_potencia_de_2(n::Int)::Bool
     return n > 0 && (n & (n - 1)) == 0
@@ -128,9 +135,25 @@ function aplicar_ruido(trama_codificada::Vector{String}, tasa::Int)::Vector{Stri
 end
 
 function main()
-    mensaje = readline()
+    #sock = connect("127.0.0.1", 9999)
+    #println("Conectado al servidor")
+    #while true
+    #end
+    mensaje_texto, ruido = solicitar_mensaje()
+    @assert isa(mensaje_texto, String) "Error: mensaje debe ser String"
+    println("[Aplicación] Mensaje original: $mensaje_texto")
 
-    println(crc_emisor(mensaje))
+    lista_binarios = codificar_mensaje(mensaje_texto)
+    @assert isa(lista_binarios, Vector{String}) "Error: codificar_mensaje debe retornar Vector{String}"
+    println("[Presentación] Codificación verificada. Total letras: $(length(lista_binarios))")
+
+    codificados = calcular_integridad(lista_binarios)
+    trama = join(codificados, " ")
+    println("[Enlace] Trama con redundancia: $trama")
+
+    trama_con_ruido = aplicar_ruido(copy(codificados), ruido)
+    trama_final = join(trama_con_ruido, " ")
+    println("[Ruido] Trama final enviada: $trama_final")
 end
 
 main()
