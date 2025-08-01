@@ -4,13 +4,21 @@ import socket
 
 polinomio = "1001" #Polinomio a utlizar para decodificar
 # Decodificación con Hamming
-def detectar_y_corregir(mensaje: str, r: int):
+def detectar_y_corregir(mensaje: str):
 
 
-    n = len(mensaje)
-    bits = list(mensaje)
+    bit_extra_recibido = int(mensaje[-1])
+    datos = mensaje[:-1]
+
+    n = len(datos)
+    bits = list(datos)
     bits.reverse() # Invertir el orden de la cadena
     error_pos = 0
+
+    r = 0
+    while (n - r) + r + 1 > 2**r:  # (m+r+1 > 2^r)
+        r += 1
+    print("R:", r)
     for i in range(r):
         pos = 2 ** i
         xor = 0
@@ -20,14 +28,24 @@ def detectar_y_corregir(mensaje: str, r: int):
         if xor:
             error_pos += pos
 
-    if error_pos == 0:
-        return mensaje, "No hay errores"
-    elif error_pos <= n:
+    if error_pos != 0 and error_pos <= n: #Error de un bit
         bits[error_pos - 1] = '1' if bits[error_pos - 1] == '0' else '0'
-        bits.reverse()
-        return ''.join(bits), f"Se corrigió un error en la posición {error_pos}"
+
+     # Volver a poner el orden correcto
+    bits.reverse()
+    mensaje_corregido = ''.join(bits)
+
+    # Verificar el bit de paridad
+    paridad_calculada = sum(int(b) for b in mensaje_corregido) % 2
+    if paridad_calculada != bit_extra_recibido:
+        advertencia = "Hay 2 o más errores: no se pueden corregir"
     else:
-        return mensaje, "Hay 2 o más errores: no se pueden corregir"
+        if error_pos == 0:
+            advertencia = "No hay errores"
+        else:
+            advertencia = f"Se corrigió un error en la posición {error_pos}"
+
+    return mensaje_corregido, advertencia
 
 # Detección de errores con CRC
 def detectar_errores_CRC(mensaje: str):
@@ -44,6 +62,9 @@ def detectar_errores_CRC(mensaje: str):
         temp = ""
 
     return "1" in result
+
+def mostrar_mensaje(texto):
+    return ''.join(format(ord(c), '08b') for c in texto)
     
 """
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -54,13 +75,30 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     with conn:
         print("Se recibió un mensaje! ")
         while True: 
-            data = conn.recv(1024)
+            data = conn.recv(1024).decode()
+            
             if not data:
                 break
-            print(f"Mensaje recibido: {data.decode()} ")
+            print(f"Mensaje recibido ")
 
+            if data[0] == "0": #0 para Hamming 
+                mensaje, advertencia = detectar_y_corregir(data[1:])
+                print(advertencia)
+                print("El mensaje era: ", mostrar_mensaje(mensaje))
+
+            else: #1 para CRC
+                if(detectar_errores_CRC(data[:1])):
+                    print("Se detectaron errores en el mensaje :(")
+
+                else: 
+                    print("No hubo un error en el mensaje :)")
+                    print(f"El mensaje original es: {mostrar_mensaje(data[1:])} ")
 """
 
-print(detectar_errores_CRC("10011001"))
+
+
+msg, advertencia = detectar_y_corregir("00110111")
+
+print(msg, advertencia)
 
 
