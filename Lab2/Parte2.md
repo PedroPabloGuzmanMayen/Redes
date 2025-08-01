@@ -47,7 +47,7 @@ Para poder medir el rendimiento de cada uno de los algoritmos se hizo lo siguien
 
 Estos fueron los resultados: 
 
-[Hamming](comparacion_algoritmos.png)
+[Hamming](Hamming/comparacion_algoritmos.png)
 
 ---
 
