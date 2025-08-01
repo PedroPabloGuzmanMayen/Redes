@@ -7,8 +7,8 @@ polinomio = "1001" #Polinomio a utlizar para decodificar
 def detectar_y_corregir(mensaje: str):
 
 
-    bit_extra_recibido = int(mensaje[-1])
-    datos = mensaje[:-1]
+    bit_extra_recibido = int(mensaje[0])
+    datos = mensaje[1:]
 
     n = len(datos)
     bits = list(datos)
@@ -63,17 +63,29 @@ def detectar_errores_CRC(mensaje: str):
 
     return "1" in result
 
-def mostrar_mensaje(texto):
-    return ''.join(format(ord(c), '08b') for c in texto)
+
+def extraer_datos(mensaje_corregido: str):
+  
+    longitud_sin_extra = len(mensaje_corregido) - 1
+
+    datos = []
+    for i in range(1, longitud_sin_extra + 1):  
+        if (i & (i - 1)) != 0: 
+            datos.append(mensaje_corregido[i - 1])  
+    return ''.join(datos)
+
+
+def mostrar_mensaje(bits: str):
+    return chr(int(bits,2))
     
 """
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind(("127.0.0.1", 9999))
+    s.bind(("127.0.0.1", 9998))
     print("Escuchando solicitudes ...")
     s.listen()
     conn, addr = s.accept()
     with conn:
-        print("Se recibió un mensaje! ")
+        print("Se estableció conexión! ")
         while True: 
             data = conn.recv(1024).decode()
             
@@ -82,9 +94,11 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             print(f"Mensaje recibido ")
 
             if data[0] == "0": #0 para Hamming 
-                mensaje, advertencia = detectar_y_corregir(data[1:])
+                mensaje_corregido, advertencia = detectar_y_corregir(data[1:])
+                print("Bits recibidos:", mensaje_corregido)
                 print(advertencia)
-                print("El mensaje era: ", mostrar_mensaje(mensaje))
+                print(f"Mensaje original: {extraer_datos(mensaje_corregido)}")
+                print("El mensaje era:", mostrar_mensaje(extraer_datos(mensaje_corregido)))
 
             else: #1 para CRC
                 if(detectar_errores_CRC(data[:1])):
@@ -95,10 +109,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     print(f"El mensaje original es: {mostrar_mensaje(data[1:])} ")
 """
 
+print(detectar_errores_CRC("1000001000"))
 
 
-msg, advertencia = detectar_y_corregir("00110111")
-
-print(msg, advertencia)
 
 
