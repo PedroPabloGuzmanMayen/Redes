@@ -1,5 +1,7 @@
 using Random
 using Sockets
+using Statistics
+using Plots
 
 
 polinomio = "1001"
@@ -32,7 +34,6 @@ function crc_emisor(mensaje::String)::String
 
         end
         temp = ""
-        println("Rsultado: " * resultado)
     end
 
     return mensaje * resultado
@@ -172,5 +173,109 @@ function main()
     end
 end
 
-main()
+#main()
+function probar_algoritmo(sock, algoritmo::String, mensaje::String, tasa::Int, repeticiones::Int)
+    lista_binarios = codificar_mensaje(mensaje)
+    resultados = []
 
+    for _ in 1:repeticiones
+        if algoritmo == "HAMMING"
+            codificados = calcular_integridad(lista_binarios)
+        else
+            msg = join(lista_binarios, " ")
+            codificados = [crc_emisor(msg)]
+        end
+
+        trama_ruido = aplicar_ruido(copy(codificados), tasa)
+        trama_final = (algoritmo == "HAMMING" ? "0" : "1") * join(trama_ruido, " ")
+
+        write(sock, trama_final)
+        
+        # Leer respuesta del servidor
+        respuesta = readline(sock)
+        push!(resultados, strip(respuesta) == "OK")
+    end
+
+    return mean(resultados) * 100
+end
+
+function simular_completa()
+    println("Iniciando simulación completa...")
+    sock = connect("127.0.0.1", 9998)
+
+    # Tasas de error de 0 a 100 de 5 en 5
+    tasas = collect(0:5:100)
+    resultados_hamming = Float64[]
+    resultados_crc = Float64[]
+    repeticiones = 50  # Número de pruebas por tasa
+
+    println("Probando algoritmo Hamming...")
+    for (i, tasa) in enumerate(tasas)
+        println("Progreso Hamming: $(i)/$(length(tasas)) - Tasa: $tasa%")
+        resultado = probar_algoritmo(sock, "HAMMING", "H", tasa, repeticiones)
+        push!(resultados_hamming, resultado)
+        println("Tasa $tasa%: $(resultado)% éxito")
+    end
+
+    println("\nProbando algoritmo CRC...")
+    for (i, tasa) in enumerate(tasas)
+        println("Progreso CRC: $(i)/$(length(tasas)) - Tasa: $tasa%")
+        resultado = probar_algoritmo(sock, "CRC", "H", tasa, repeticiones)
+        push!(resultados_crc, resultado)
+        println("Tasa $tasa%: $(resultado)% éxito")
+    end
+
+    close(sock)
+
+    # Crear gráficas
+    println("\nGenerando gráficas...")
+    
+    # Gráfica comparativa
+    p1 = plot(tasas, resultados_hamming,
+              label="Hamming",
+              xlabel="Tasa de error (%)",
+              ylabel="% de mensajes correctos",
+              title="Comparación de Algoritmos de Detección/Corrección",
+              lw=3,
+              marker=:circle,
+              markersize=4,
+              color=:blue)
+    
+    plot!(p1, tasas, resultados_crc,
+          label="CRC",
+          lw=3,
+          marker=:square,
+          markersize=4,
+          color=:red)
+    
+    hline!(p1, [50], linestyle=:dash, color=:gray, label="50% éxito")
+    hline!(p1, [90], linestyle=:dash, color=:green, label="90% éxito")
+    
+    savefig(p1, "comparacion_algoritmos.png")
+    p2 = plot(tasas, resultados_hamming,
+              label="Hamming",
+              xlabel="Tasa de error (%)",
+              ylabel="% de mensajes correctos",
+              title="Eficiencia del Algoritmo Hamming",
+              lw=3,
+              marker=:circle,
+              markersize=5,
+              color=:blue,
+              grid=true)
+    
+    savefig(p2, "resultados_hamming.png")
+    p3 = plot(tasas, resultados_crc,
+              label="CRC",
+              xlabel="Tasa de error (%)",
+              ylabel="% de mensajes correctos",
+              title="Eficiencia del Algoritmo CRC",
+              lw=3,
+              marker=:square,
+              markersize=5,
+              color=:red,
+              grid=true)
+    
+    savefig(p3, "resultados_crc.png")
+end
+
+simular_completa()
