@@ -1,7 +1,5 @@
 import socket
 
-
-
 polinomio = "1001" #Polinomio a utlizar para decodificar
 # Decodificación con Hamming
 def detectar_y_corregir(mensaje: str):
