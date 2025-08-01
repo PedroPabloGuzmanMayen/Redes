@@ -19,10 +19,7 @@ function crc_emisor(mensaje::String)::String
         for i in 1:4
             temp = temp * string(xor(parse(Int, resultado[i]), parse(Int, polinomio[i])))
         end
-        println("Temp: " * temp)
-        println("Temp 0: " * temp[1])
-        println(temp[1] == '0')
-        println("Mensaje: " * mensaje)
+
         if temp[1] == '0'
             resultado = temp[2:end] * resultado[end - (length(resultado) - length(polinomio)) + 1:end]
         else 
