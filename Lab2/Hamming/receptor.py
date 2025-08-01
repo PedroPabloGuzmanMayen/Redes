@@ -95,19 +95,24 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
             if data[0] == "0": #0 para Hamming 
                 mensaje_corregido, advertencia = detectar_y_corregir(data[1:])
-                print("Bits recibidos:", mensaje_corregido)
-                print(advertencia)
-                print(f"Mensaje original: {extraer_datos(mensaje_corregido)}")
-                print("El mensaje era:", mostrar_mensaje(extraer_datos(mensaje_corregido)))
+                if advertencia == "No hay errores":
+                    print(f"Mensaje original: {extraer_datos(mensaje_corregido)}")
+                    print("El mensaje era:", mostrar_mensaje(extraer_datos(mensaje_corregido)))
+                    conn.sendall(b"OK\n")
+                else:
+                    print(advertencia)
+                    conn.sendall(b"ERR\n")
 
             else: #1 para CRC
                 print(f"Mensaje recibido: {data}")
                 if(detectar_errores_CRC(data[1:])):
                     print("Se detectaron errores en el mensaje :(")
+                    conn.sendall(b"ERR\n")
 
                 else: 
                     print("No hubo un error en el mensaje :)")
                     print(f"El mensaje original es: {mostrar_mensaje(data[1:-3])} ")
+                    conn.sendall(b"OK\n")
 
 
 
