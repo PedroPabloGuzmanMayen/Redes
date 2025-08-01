@@ -28,6 +28,12 @@ function crc_emisor(mensaje::String)::String
         else 
             resultado = temp * resultado[end - (length(resultado) - length(polinomio)) + 1:end]
         end
+
+        if !occursin("1", resultado)
+            resultado = "000"
+            break
+
+        end
         temp = ""
         println("Rsultado: " * resultado)
     end
@@ -134,26 +140,40 @@ function aplicar_ruido(trama_codificada::Vector{String}, tasa::Int)::Vector{Stri
     return trama_con_ruido
 end
 
+
+
+
+
 function main()
-    #sock = connect("127.0.0.1", 9999)
-    #println("Conectado al servidor")
-    #while true
-    #end
-    mensaje_texto, ruido = solicitar_mensaje()
-    @assert isa(mensaje_texto, String) "Error: mensaje debe ser String"
-    println("[Aplicación] Mensaje original: $mensaje_texto")
+    sock = connect("127.0.0.1", 9998)
+    println("Conectado al servidor")
+    while true
+        println("Selecciona el algoritmo a utilizar: 0 hamming, 1 CRC ")
+        algoritmo = readline()
+        mensaje_texto, ruido = solicitar_mensaje()
+        @assert isa(mensaje_texto, String) "Error: mensaje debe ser String"
+        println("[Aplicación] Mensaje original: $mensaje_texto")
 
-    lista_binarios = codificar_mensaje(mensaje_texto)
-    @assert isa(lista_binarios, Vector{String}) "Error: codificar_mensaje debe retornar Vector{String}"
-    println("[Presentación] Codificación verificada. Total letras: $(length(lista_binarios))")
+        lista_binarios = codificar_mensaje(mensaje_texto)
+        @assert isa(lista_binarios, Vector{String}) "Error: codificar_mensaje debe retornar Vector{String}"
+        println("[Presentación] Codificación verificada. Total letras: $(length(lista_binarios))")
+        if algoritmo == "0"
+            codificados = calcular_integridad(lista_binarios)
+            trama = join(codificados, " ")
+            println("[Enlace] Trama con redundancia: $trama")
+        else 
+            msg = join(lista_binarios, " ")
+            trama = crc_emisor(msg)
+            codificados = [trama]
+            println("Mensaje luego de CRC: $trama")
+        end
 
-    codificados = calcular_integridad(lista_binarios)
-    trama = join(codificados, " ")
-    println("[Enlace] Trama con redundancia: $trama")
-
-    trama_con_ruido = aplicar_ruido(copy(codificados), ruido)
-    trama_final = join(trama_con_ruido, " ")
-    println("[Ruido] Trama final enviada: $trama_final")
+        trama_con_ruido = aplicar_ruido(copy(codificados), ruido)
+        trama_final = algoritmo * join(trama_con_ruido, " ")
+        println("[Ruido] Trama final enviada: $trama_final")
+        write(sock, trama_final)
+    end
 end
 
 main()
+
