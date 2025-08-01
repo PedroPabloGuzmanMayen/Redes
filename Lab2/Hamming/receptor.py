@@ -58,7 +58,7 @@ def detectar_errores_CRC(mensaje: str):
             result = temp[1:] + result[len(polinomio):]
         else:
             result = temp + result[len(polinomio):]
-        print("Result: ", result)
+
         temp = ""
 
     return "1" in result
@@ -78,7 +78,7 @@ def extraer_datos(mensaje_corregido: str):
 def mostrar_mensaje(bits: str):
     return chr(int(bits,2))
     
-"""
+
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind(("127.0.0.1", 9998))
     print("Escuchando solicitudes ...")
@@ -101,15 +101,16 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 print("El mensaje era:", mostrar_mensaje(extraer_datos(mensaje_corregido)))
 
             else: #1 para CRC
-                if(detectar_errores_CRC(data[:1])):
+                print(f"Mensaje recibido: {data}")
+                if(detectar_errores_CRC(data[1:])):
                     print("Se detectaron errores en el mensaje :(")
 
                 else: 
                     print("No hubo un error en el mensaje :)")
-                    print(f"El mensaje original es: {mostrar_mensaje(data[1:])} ")
-"""
+                    print(f"El mensaje original es: {mostrar_mensaje(data[1:-3])} ")
 
-print(detectar_errores_CRC("1000001000"))
+
+
 
 
 
