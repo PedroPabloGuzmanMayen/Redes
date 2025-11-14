@@ -1,6 +1,6 @@
 """
 Ejecución: 
-python producers/sensor_simulator.py --topic 12345 --bootstrap-server iot.redesuvg.cloud:9092 --mode compact
+python -m producers.sensor_simulator --topic 338800 --bootstrap-server iot.redesuvg.cloud:9092 --mode compact
 """
 import argparse
 import json
@@ -12,8 +12,8 @@ import time
 
 from confluent_kafka import Producer
 
-import config
-from encode_decode import encode_sensor_payload
+from producers import config
+from producers.encode_decode import encode_sensor_payload
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s: %(message)s')
 logger = logging.getLogger('sensor_sim')

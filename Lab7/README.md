@@ -17,13 +17,13 @@ Para ejecutar el productor:
 
 ```sh
 source .venv/bin/activate
-python producers/sensor_simulator.py --topic 13245 --bootstrap-server iot.redesuvg.cloud:9092 --interval 20
+python -m producers.sensor_simulator --topic 338800 --bootstrap-server iot.redesuvg.cloud:9092 --mode compact
 ```
 Para ejecutar el consumidor y graficador:
 
 ```sh
 source .venv/bin/activate
-python consumers/consumer_plotter.py --topic 13245 --bootstrap-server iot.redesuvg.cloud:9092
+python -m consumers.consumer_plotter --topic 338800
 ```
 
 ## Estructura del Lab 7

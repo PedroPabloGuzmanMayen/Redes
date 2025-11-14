@@ -1,11 +1,11 @@
 from typing import Dict
-import config 
+from producers import config 
 
+from typing import Dict
+from producers.config import WIND_TO_CODE, CODE_TO_WIND, TEMP_MIN, TEMP_MAX, HUM_MIN, HUM_MAX
 TEMP_SCALE = 100  
 MAX_TEMP_SCALED = (1 << 14) - 1  
 
-WIND_TO_CODE = config.WIND_TO_CODE
-CODE_TO_WIND = config.CODE_TO_WIND
 
 def encode_sensor_payload(temperature: float, humidity: int, wind_dir: str) -> bytes:
     """Recibe valores (temperature float en °C, humidity int 0-100, wind_dir string) y devuelve 3 bytes."""
