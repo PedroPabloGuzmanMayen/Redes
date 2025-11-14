@@ -1,5 +1,3 @@
-# producers/config.py
-
 DEFAULT_BOOTSTRAP_SERVER = 'iot.redesuvg.cloud:9092'
 DEFAULT_MIN_INTERVAL = 15  
 DEFAULT_MAX_INTERVAL = 30 

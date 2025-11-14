@@ -1,4 +1,7 @@
-# Lab 10
+# Lab 7 
+
+## Dependencias
+- librdkafka
 
 ## ¿Cómo ejecutar el lab?
 
@@ -14,16 +17,16 @@ Para ejecutar el productor:
 
 ```sh
 source .venv/bin/activate
-python producers/sensor_simulator.py --topic 12345 --bootstrap-server iot.redesuvg.cloud:9092 --interval 20
+python producers/sensor_simulator.py --topic 13245 --bootstrap-server iot.redesuvg.cloud:9092 --interval 20
 ```
 Para ejecutar el consumidor y graficador:
 
 ```sh
 source .venv/bin/activate
-python consumers/consumer_plotter.py --topic 12345 --bootstrap-server iot.redesuvg.cloud:9092
+python consumers/consumer_plotter.py --topic 13245 --bootstrap-server iot.redesuvg.cloud:9092
 ```
 
-## Estructura del Lab10
+## Estructura del Lab 7
 
 ```txt
 Lab10/
